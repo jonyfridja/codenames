@@ -1,0 +1,9 @@
+{
+    "name": "Node Dev",
+    "image": "node:23.10.0",
+    "customizations": {},
+    "forwardPorts": [
+      3000
+    ],
+    "postCreateCommand": "corepack enable && pnpm install"
+  }
