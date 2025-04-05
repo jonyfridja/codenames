@@ -1,9 +1,19 @@
 {
     "name": "Node Dev",
     "image": "node:23.10.0",
-    "customizations": {},
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "esbenp.prettier-vscode",
+          "dbaeumer.vscode-eslint",
+          "ms-azuretools.vscode-docker",
+          "mhutchie.git-graph",
+          "Vue.volar"
+        ]
+      }
+    },
     "forwardPorts": [
       3000
     ],
-    "postCreateCommand": "corepack enable && pnpm install"
+    "postCreateCommand": "yes | corepack enable && pnpm install"
   }
