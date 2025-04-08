@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import CounterOpts from "./components/Counter-Opts.vue";
-import Counter from "./components/Counter.vue";
-import HelloWorld from "./components/HelloWorld.vue";
+// import Counter from "./components/Counter.vue";
+// import HelloWorld from "./components/HelloWorld.vue";
 </script>
 
 <template>
