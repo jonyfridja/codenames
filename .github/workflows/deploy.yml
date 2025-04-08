@@ -1,5 +1,7 @@
 name: Deploy Workflow
 
+permissions:
+  contents: write
 on:
   workflow_call:
     inputs:
@@ -11,5 +13,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy
-        run: echo "Deploying to ${{ inputs.env }} environment..."
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist # The folder the action should deploy.
+
+
