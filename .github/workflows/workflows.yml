@@ -1,0 +1,23 @@
+name: Reusable Workflows
+
+on:
+  workflow_call:
+    inputs:
+      action:
+        required: true
+        type: string
+
+jobs:
+  build:
+    if: ${{ inputs.action == 'build' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build
+        run: echo "Running build..."
+
+  test:
+    if: ${{ inputs.action == 'test' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        run: echo "Running tests..."
