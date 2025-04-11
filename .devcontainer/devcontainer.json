@@ -1,5 +1,8 @@
 {
-  "name": "Node Dev",
+  "name": "Node Dev with Act",
+  "build": {
+    "dockerfile": "DockerFile"
+  },
   "customizations": {
     "vscode": {
       "extensions": [
@@ -7,12 +10,19 @@
         "dbaeumer.vscode-eslint",
         "ms-azuretools.vscode-docker",
         "mhutchie.git-graph",
+        "ms-vscode.vscode-typescript-tslint-plugin",
+        "ms-vsliveshare.vsliveshare",
+        "mhutchie.git-graph",
+        "eamodio.gitlens",
+        "streetsidesoftware.code-spell-checker",
         "Vue.volar"
       ]
     }
   },
   "forwardPorts": [3000],
-  "build": {
-    "dockerfile": "devcontainer.Dockerfile"
-  }
+  "postCreateCommand": "pnpm install",
+  // Add mount for Docker socket to allow act to work inside the container
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+  ]
 }
