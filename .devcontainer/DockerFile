@@ -14,11 +14,11 @@ RUN curl -fsSL https://get.docker.com | sh
 RUN curl -s https://raw.githubusercontent.com/nektos/act/master/install.sh | bash
 
 
-# Enable corepack and install pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# # Enable corepack and install pnpm
+# RUN corepack enable && echo "Y" | corepack prepare pnpm@latest --activate
 
-# pnpm global
-RUN pnpm setup && source /root/.bashrc
+# # pnpm global
+# RUN pnpm setup && source /root/.bashrc
 
-RUN pnpm install turbo --global
+# RUN pnpm install turbo --global
 

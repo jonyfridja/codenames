@@ -22,7 +22,6 @@
   "forwardPorts": [3000],
   "postCreateCommand": "pnpm install",
   // Add mount for Docker socket to allow act to work inside the container
-  "mounts": [
-    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
-  ]
+  "workspaceMount": "source=/home/root/dev-containers/codenames,target=/workspace,type=bind,consistency=cached",
+  "workspaceFolder": "/workspace"
 }

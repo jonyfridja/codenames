@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import CounterOpts from "./components/Counter-Opts.vue";
-// import Counter from "./components/Counter.vue";
-// import HelloWorld from "./components/HelloWorld.vue";
 </script>
 
 <template>
-  <!-- <Counter /> -->
   <CounterOpts></CounterOpts>
 </template>
 
@@ -13,6 +10,7 @@ import CounterOpts from "./components/Counter-Opts.vue";
 .logo {
   height: 6em;
   padding: 1.5em;
+  color:red;
   will-change: filter;
   transition: filter 300ms;
 }
@@ -20,6 +18,6 @@ import CounterOpts from "./components/Counter-Opts.vue";
   filter: drop-shadow(0 0 2em #646cffaa);
 }
 .logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+  filter: drop-shadow(0 0 2em #20cc7eaa);
 }
 </style>
