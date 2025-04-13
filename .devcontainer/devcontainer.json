@@ -1,0 +1,27 @@
+{
+  "name": "Node Dev with Act",
+  "build": {
+    "dockerfile": "DockerFile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "ms-azuretools.vscode-docker",
+        "mhutchie.git-graph",
+        "ms-vscode.vscode-typescript-tslint-plugin",
+        "ms-vsliveshare.vsliveshare",
+        "mhutchie.git-graph",
+        "eamodio.gitlens",
+        "streetsidesoftware.code-spell-checker",
+        "Vue.volar"
+      ]
+    }
+  },
+  "forwardPorts": [3000],
+  "postCreateCommand": "pnpm install",
+  // Add mount for Docker socket to allow act to work inside the container
+  "workspaceMount": "source=/home/root/dev-containers/codenames,target=/workspace,type=bind,consistency=cached",
+  "workspaceFolder": "/workspace"
+}
