@@ -17,7 +17,7 @@ defineEmits<Emits>();
 </script>
 
 <template>
-  <aside class="self-start flex max-h-[calc(100vh-3rem)] flex-col gap-4 overflow-y-auto rounded-3xl border-2 border-surface-card bg-surface-100 p-5 xl:sticky xl:top-6">
+  <aside class="flex h-full flex-col gap-4 overflow-y-auto rounded-3xl border-2 border-surface-card bg-surface-100 p-5 xl:sticky xl:top-6">
     <!-- Match state status -->
     <div class="px-1 py-1 text-xl font-black uppercase tracking-[0.08em] text-surface-900">
       <span :class="board.activeTeam === ROLES.red ? 'text-red-500' : 'text-teal-500'">{{ board.activeTeam }}</span>

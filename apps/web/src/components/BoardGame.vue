@@ -16,7 +16,7 @@ defineEmits<Emits>();
 </script>
 
 <template>
-  <div class="rounded-3xl border-2 border-surface-card bg-surface-100 p-4 sm:p-5">
+  <div class="flex h-full flex-col rounded-3xl border-2 border-surface-card bg-surface-100 p-4 sm:p-5">
     <div class="grid grid-cols-2 gap-3 pb-4 sm:grid-cols-3 lg:grid-cols-5">
       <Card
         v-for="card in board.cards"

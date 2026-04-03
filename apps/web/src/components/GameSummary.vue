@@ -1,19 +1,33 @@
 <script setup lang="ts">
+import { computed } from "vue";
+
 import { type Card } from "../codenames/types";
 import { titleCase } from "../codenames/helpers";
 import { ROLES } from "../codenames/constants";
 
+interface HistoryEntry extends Card {
+  turnTeam: "red" | "blue";
+  wasSuccess: boolean;
+}
+
 interface Props {
   winner: "red" | "blue";
-  history: Card[];
+  history: HistoryEntry[];
 }
 
 interface Emits {
   restart: [];
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 defineEmits<Emits>();
+
+const displayHistory = computed(() =>
+  props.history.map((entry, index, entries) => ({
+    ...entry,
+    showTeamHeader: index === 0 || entries[index - 1]?.turnTeam !== entry.turnTeam,
+  }))
+);
 
 function roleColorClass(role: Card["role"]) {
   if (role === ROLES.red) {
@@ -33,7 +47,7 @@ function roleColorClass(role: Card["role"]) {
 </script>
 
 <template>
-  <aside class="self-start flex max-h-[calc(100vh-3rem)] flex-col gap-4 overflow-hidden rounded-3xl border-2 border-surface-card bg-surface-100 p-5 xl:sticky xl:top-6">
+  <aside class="flex h-full flex-col gap-4 overflow-hidden rounded-3xl border-2 border-surface-card bg-surface-100 p-5 xl:sticky xl:top-6">
     <!-- Winner banner -->
     <div
       class="rounded-2xl px-4 py-3 text-xl font-black uppercase tracking-[0.08em] text-white"
@@ -56,16 +70,62 @@ function roleColorClass(role: Card["role"]) {
     <!-- Game history -->
     <div class="min-h-0">
       <div class="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-surface-700">Game History</div>
-      <ol class="min-h-0 max-h-[min(50vh,28rem)] space-y-1.5 overflow-auto pr-1">
+      <ol class="min-h-0 flex max-h-[min(50vh,28rem)] flex-col gap-1 overflow-auto pr-1">
         <li
-          v-for="(card, index) in history"
+          v-for="(card, index) in displayHistory"
           :key="card.id"
-          class="flex items-center gap-3 rounded-lg border px-3 py-2 text-sm"
-          :class="roleColorClass(card.role)"
+          class="contents"
         >
-          <span class="w-5 shrink-0 text-right text-xs font-semibold opacity-50">{{ index + 1 }}</span>
-          <span class="font-bold uppercase tracking-wide">{{ titleCase(card.word) }}</span>
-          <span class="ml-auto text-xs font-semibold uppercase opacity-60">{{ card.role }}</span>
+          <div
+            v-if="card.showTeamHeader"
+            class="mb-1 mt-2 text-[0.68rem] font-bold uppercase tracking-[0.24em]"
+            :class="card.turnTeam === ROLES.red ? 'text-left text-red-700' : 'text-right text-teal-700'"
+          >
+            {{ card.turnTeam === ROLES.red ? "Red Team" : "Blue Team" }}
+          </div>
+          <div
+            class="flex items-center gap-3 rounded-lg border px-3 py-2 text-sm"
+            :class="roleColorClass(card.role)"
+          >
+            <span class="w-5 shrink-0 text-right text-xs font-semibold opacity-50">{{ index + 1 }}</span>
+            <span class="font-bold uppercase tracking-wide">{{ titleCase(card.word) }}</span>
+            <span
+              class="ml-auto inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-sm border"
+              :class="
+                card.wasSuccess
+                  ? 'border-green-700 bg-green-500 text-white'
+                  : 'border-orange-700 bg-orange-500 text-white'
+              "
+              :title="card.wasSuccess ? 'Success' : 'Failure'"
+              :aria-label="card.wasSuccess ? 'Success' : 'Failure'"
+            >
+              <svg
+                v-if="card.wasSuccess"
+                viewBox="0 0 16 16"
+                class="h-3 w-3"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M3.5 8.5l2.5 2.5 6-6" />
+              </svg>
+              <svg
+                v-else
+                viewBox="0 0 16 16"
+                class="h-3 w-3"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <path d="M4 4l8 8M12 4L4 12" />
+              </svg>
+            </span>
+          </div>
         </li>
       </ol>
     </div>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 
 import {
   advanceBoardTurn,
@@ -11,15 +11,56 @@ import {
 import BoardGame from "./components/BoardGame.vue";
 import GameSummary from "./components/GameSummary.vue";
 import MatchState from "./components/MatchState.vue";
-import type { Card } from "./codenames/types";
+import type { BoardState, Card, Team } from "./codenames/types";
+
+export interface RevealHistoryEntry extends Card {
+  turnTeam: Team;
+  wasSuccess: boolean;
+}
+
+interface PersistedState {
+  boardState: BoardState;
+  revealHistory: RevealHistoryEntry[];
+  unlockedExtraWords: string[];
+}
+
+const STORAGE_KEY = "codenames-game";
+
+function loadPersistedState(): PersistedState | null {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw) as PersistedState;
+  } catch {
+    return null;
+  }
+}
+
+function saveState(state: PersistedState) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch {
+    // storage unavailable — ignore
+  }
+}
+
+const persisted = loadPersistedState();
 
 const phraseInput = ref("");
-const unlockedExtraWords = ref<string[]>([]);
+const unlockedExtraWords = ref<string[]>(persisted?.unlockedExtraWords ?? []);
 const showSpymasterView = ref(false);
-const boardState = ref(createBoard([]));
-const revealHistory = ref<Card[]>([]);
+const boardState = ref<BoardState>(persisted?.boardState ?? createBoard([]));
+const revealHistory = ref<RevealHistoryEntry[]>(persisted?.revealHistory ?? []);
 
 const remainingCounts = computed(() => getRemainingCounts(boardState.value));
+
+watch(
+  [boardState, revealHistory, unlockedExtraWords],
+  ([board, history, extraWords]) => {
+    saveState({ boardState: board, revealHistory: history, unlockedExtraWords: extraWords });
+  },
+  { deep: true },
+);
 
 function newBoard() {
   boardState.value = createBoard(unlockedExtraWords.value);
@@ -28,11 +69,20 @@ function newBoard() {
 }
 
 function revealCard(cardId: number) {
+  const turnTeam = boardState.value.activeTeam;
   const card = boardState.value.cards.find((c) => c.id === cardId);
   boardState.value = revealBoardCard(boardState.value, cardId);
 
   if (card && !card.revealed) {
-    revealHistory.value = [...revealHistory.value, { ...card, revealed: true }];
+    revealHistory.value = [
+      ...revealHistory.value,
+      {
+        ...card,
+        revealed: true,
+        turnTeam,
+        wasSuccess: card.role === turnTeam,
+      },
+    ];
   }
 }
 
@@ -127,7 +177,7 @@ onUnmounted(() => {
         </div>
       </header>
 
-      <section class="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_20rem]">
+      <section class="grid items-stretch gap-6 xl:grid-cols-[minmax(0,1fr)_20rem]">
         <BoardGame :board="boardState" :showSpymasterView="showSpymasterView" @reveal-card="revealCard" />
         <GameSummary
           v-if="boardState.winner"
