@@ -1,0 +1,5 @@
+node_modules
+dist
+**/*.code-search
+.turbo
+pnpm-lock.yaml
