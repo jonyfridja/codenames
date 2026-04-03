@@ -1,16 +1,11 @@
 @import "tailwindcss";
 
 @theme {
-  /* Color palette overrides */
-  --color-surface-100: #fffdfe;
-  --color-surface-200: #fffcfe;
-  --color-surface-300: #fffafd;
-  --color-surface-400: #fff9fd;
-  --color-surface-500: #fff7fc;
-  --color-surface-600: #ccc6ca;
-  --color-surface-700: #999497;
-  --color-surface-800: #666365;
-  --color-surface-900: #333132;
+  /* Surface colors - 4 states */
+  --color-surface-app: #f5f0f3;
+  --color-surface-card: #e8e0e5;
+  --color-surface-card-hover: #d9cfd6;
+  --color-surface-assassin: #1a1618;
 
   --color-purple-100: #e8e9ff;
   --color-purple-200: #d1d4ff;
@@ -80,6 +75,6 @@ body,
 
 body {
   margin: 0;
-  background: var(--color-surface-200);
-  color: var(--color-surface-900);
+  background: var(--color-surface-app);
+  color: var(--color-surface-assassin);
 }
