@@ -2,41 +2,46 @@
 
 @theme {
   /* Color palette overrides */
-  --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-200: #bfdbfe;
-  --color-primary-300: #93c5fd;
-  --color-primary-400: #60a5fa;
-  --color-primary-500: #3b82f6;
-  --color-primary-600: #2563eb;
-  --color-primary-700: #1d4ed8;
-  --color-primary-800: #1e40af;
-  --color-primary-900: #1e3a8a;
-  --color-primary-950: #172554;
+  --color-surface-100: #fffdfe;
+  --color-surface-200: #fffcfe;
+  --color-surface-300: #fffafd;
+  --color-surface-400: #fff9fd;
+  --color-surface-500: #fff7fc;
+  --color-surface-600: #ccc6ca;
+  --color-surface-700: #999497;
+  --color-surface-800: #666365;
+  --color-surface-900: #333132;
 
-  --color-accent-50: #ecfeff;
-  --color-accent-100: #cffafe;
-  --color-accent-200: #a5f3fc;
-  --color-accent-300: #67e8f9;
-  --color-accent-400: #22d3ee;
-  --color-accent-500: #06b6d4;
-  --color-accent-600: #0891b2;
-  --color-accent-700: #0e7490;
-  --color-accent-800: #155e75;
-  --color-accent-900: #164e63;
-  --color-accent-950: #083344;
+  --color-purple-100: #e8e9ff;
+  --color-purple-200: #d1d4ff;
+  --color-purple-300: #b9beff;
+  --color-purple-400: #a2a9ff;
+  --color-purple-500: #8b93ff;
+  --color-purple-600: #6f76cc;
+  --color-purple-700: #535899;
+  --color-purple-800: #383b66;
+  --color-purple-900: #1c1d33;
 
-  --color-surface-50: #f8fafc;
-  --color-surface-100: #f1f5f9;
-  --color-surface-200: #e2e8f0;
-  --color-surface-300: #cbd5e1;
-  --color-surface-400: #94a3b8;
-  --color-surface-500: #64748b;
-  --color-surface-600: #475569;
-  --color-surface-700: #334155;
-  --color-surface-800: #1e293b;
-  --color-surface-900: #0f172a;
-  --color-surface-950: #020617;
+  --color-teal-100: #cef3f9;
+  --color-teal-200: #9de7f3;
+  --color-teal-300: #6cdcec;
+  --color-teal-400: #3bd0e6;
+  --color-teal-500: #0ac4e0;
+  --color-teal-600: #089db3;
+  --color-teal-700: #067686;
+  --color-teal-800: #044e5a;
+  --color-teal-900: #02272d;
+
+
+  --color-red-100: #ffdede;
+  --color-red-200: #ffbdbd;
+  --color-red-300: #ff9d9d;
+  --color-red-400: #ff7c7c;
+  --color-red-500: #ff5b5b;
+  --color-red-600: #cc4949;
+  --color-red-700: #993737;
+  --color-red-800: #662424;
+  --color-red-900: #331212;
 
   /* Explicit font-size overrides (same values as Tailwind defaults) */
   --text-xs: 0.75rem;
@@ -75,4 +80,6 @@ body,
 
 body {
   margin: 0;
+  background: var(--color-surface-200);
+  color: var(--color-surface-900);
 }

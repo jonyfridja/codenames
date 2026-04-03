@@ -28,13 +28,16 @@ describe("backend API", () => {
   it("returns 200 for /extra with the correct phrase", async () => {
     const app = createApp({
       expectedPhrase: "correct-phrase",
+      extraWords: ["cipher", "signal"],
       webDistDir: tmpDir,
     });
 
-    await request(app)
+    const response = await request(app)
       .get("/extra")
       .query({ phrase: "correct-phrase" })
       .expect(200);
+
+    expect(response.body).toEqual(["cipher", "signal"]);
   });
 
   it("returns 403 for /extra with an incorrect phrase", async () => {
