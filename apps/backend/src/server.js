@@ -23,7 +23,7 @@ async function ensureWebBuildExists() {
 
 app.use(express.static(webDistDir, { index: false }));
 
-app.get("/", async (_req, res) => {
+async function sendWebIndexOrError(res) {
   if (!(await ensureWebBuildExists())) {
     res
       .status(500)
@@ -32,7 +32,7 @@ app.get("/", async (_req, res) => {
   }
 
   res.sendFile(webIndexFile);
-});
+}
 
 app.get("/extra", (req, res) => {
   const phrase = req.query.phrase;
@@ -42,6 +42,10 @@ app.get("/extra", (req, res) => {
   }
 
   res.sendStatus(403);
+});
+
+app.get("*", async (_req, res) => {
+  await sendWebIndexOrError(res);
 });
 
 app.listen(port, () => {
