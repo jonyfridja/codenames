@@ -1,4 +1,3 @@
-import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import express, { type Express, type Response } from "express";
@@ -22,24 +21,14 @@ export function createApp(options: BackendAppOptions = {}): Express {
   const webDistDir = options.webDistDir ?? defaultWebDistDir();
   const webIndexFile = path.join(webDistDir, "index.html");
 
-  async function ensureWebBuildExists() {
-    try {
-      await fs.access(webIndexFile);
-      return true;
-    } catch {
-      return false;
-    }
-  }
-
-  async function sendWebIndexOrError(res: Response) {
-    if (!(await ensureWebBuildExists())) {
-      res
-        .status(500)
-        .send("Web build not found. Run `pnpm --filter web build` first.");
-      return;
-    }
-
-    res.sendFile(webIndexFile);
+  function sendWebIndexOrError(res: Response) {
+    res.sendFile(webIndexFile, (err) => {
+      if (err) {
+        res
+          .status(500)
+          .send("Web build not found. Run `pnpm --filter web build` first.");
+      }
+    });
   }
 
   app.use(express.static(webDistDir, { index: false }));
@@ -54,8 +43,8 @@ export function createApp(options: BackendAppOptions = {}): Express {
     res.sendStatus(403);
   });
 
-  app.get("*", async (_req, res) => {
-    await sendWebIndexOrError(res);
+  app.get("*", (_req, res) => {
+    sendWebIndexOrError(res);
   });
 
   return app;
