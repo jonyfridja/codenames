@@ -1,3 +1,38 @@
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+
+const phraseInput = "open-sesame";
+const extraStatus = ref("idle");
+
+async function checkExtra() {
+  extraStatus.value = "loading";
+
+  try {
+    const response = await fetch(
+      `/extra?phrase=${encodeURIComponent(phraseInput)}`,
+    );
+
+    if (response.status === 200) {
+      extraStatus.value = "authorized";
+      return;
+    }
+
+    if (response.status === 403) {
+      extraStatus.value = "forbidden";
+      return;
+    }
+
+    extraStatus.value = `unexpected-${response.status}`;
+  } catch {
+    extraStatus.value = "error";
+  }
+}
+
+onMounted(() => {
+  void checkExtra();
+});
+</script>
+
 <template>
   <div class="min-h-screen bg-surface-100 text-surface-900">
     <main class="mx-auto flex w-full max-w-5xl flex-col gap-8 px-6 py-14">
@@ -22,6 +57,12 @@
         <p class="text-base text-surface-700">text-base</p>
         <p class="text-lg text-surface-800">text-lg</p>
         <p class="text-xl font-semibold text-surface-900">text-xl</p>
+      </section>
+
+      <section class="rounded-2xl border border-surface-200 bg-white p-6 shadow-sm">
+        <p class="text-sm text-surface-600">Backend auth check phrase (static for now):</p>
+        <p class="mt-1 text-base font-semibold text-surface-900">{{ phraseInput }}</p>
+        <p class="mt-3 text-sm text-surface-700">/extra status: {{ extraStatus }}</p>
       </section>
     </main>
   </div>

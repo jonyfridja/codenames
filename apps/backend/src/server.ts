@@ -1,13 +1,13 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import express from "express";
+import express, { type Response } from "express";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const port = Number(process.env.PORT ?? 3000);
+const port = 3000;
 const expectedPhrase = process.env.EXTRA_AUTH_PHRASE ?? "open-sesame";
 const webDistDir = path.resolve(__dirname, "../../../dist");
 const webIndexFile = path.join(webDistDir, "index.html");
@@ -23,7 +23,7 @@ async function ensureWebBuildExists() {
 
 app.use(express.static(webDistDir, { index: false }));
 
-async function sendWebIndexOrError(res) {
+async function sendWebIndexOrError(res: Response) {
   if (!(await ensureWebBuildExists())) {
     res
       .status(500)
