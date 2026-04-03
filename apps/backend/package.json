@@ -1,0 +1,13 @@
+{
+  "name": "backend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node ./src/server.js",
+    "build": "pnpm --filter web build"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
