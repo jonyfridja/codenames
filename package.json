@@ -15,7 +15,7 @@
     "act:deploy": "act -W .github/workflows/ci.yml",
     "act:build": "act -W .github/workflows/ci.yml -j build",
     "act:test": "act -W .github/workflows/ci.yml-j test",
-    "release": "semantic-release"
+    "release": "GH_TOKEN=$(gh auth token) semantic-release"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
