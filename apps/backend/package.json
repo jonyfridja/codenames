@@ -3,22 +3,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
-    "start": "node dist/server.js",
-    "build": "pnpm --filter web build && tsc -p tsconfig.json",
-    "check-types": "tsc --noEmit",
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "build": "pnpm --filter web build",
     "test": "vitest run"
   },
   "dependencies": {
     "express": "^4.21.2"
   },
   "devDependencies": {
-    "@types/express": "^5.0.1",
-    "@types/node": "^22.14.0",
-    "@types/supertest": "^6.0.3",
     "supertest": "^7.1.1",
-    "tsx": "^4.19.3",
-    "typescript": "^5.8.2",
     "vitest": "^3.1.1"
   }
 }

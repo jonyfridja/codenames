@@ -1,43 +1,27 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import express, { type Express, type Response } from "express";
+import express from "express";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export interface BackendAppOptions {
-  expectedPhrase?: string;
-  extraWords?: string[];
-  webDistDir?: string;
-}
-
-const defaultExtraWords = [
-  "cipher",
-  "double",
-  "dossier",
-  "handler",
-  "signal",
-  "vault",
-];
+const defaultExtraWords = ["cipher", "double", "dossier", "handler", "signal", "vault"];
 
 function defaultWebDistDir() {
   return path.resolve(__dirname, "../../../dist");
 }
 
-export function createApp(options: BackendAppOptions = {}): Express {
+export function createApp(options = {}) {
   const app = express();
-  const expectedPhrase =
-    options.expectedPhrase ?? process.env.EXTRA_AUTH_PHRASE ?? "open-sesame";
+  const expectedPhrase = options.expectedPhrase ?? process.env.EXTRA_AUTH_PHRASE ?? "open-sesame";
   const extraWords = options.extraWords ?? defaultExtraWords;
   const webDistDir = options.webDistDir ?? defaultWebDistDir();
   const webIndexFile = path.join(webDistDir, "index.html");
 
-  function sendWebIndexOrError(res: Response) {
+  function sendWebIndexOrError(res) {
     res.sendFile(webIndexFile, (err) => {
       if (err) {
-        res
-          .status(500)
-          .send("Web build not found. Run `pnpm --filter web build` first.");
+        res.status(500).send("Web build not found. Run `pnpm --filter web build` first.");
       }
     });
   }

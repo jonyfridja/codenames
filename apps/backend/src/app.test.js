@@ -9,14 +9,8 @@ describe("backend API", () => {
   let tmpDir = "";
 
   beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(
-      path.join(os.tmpdir(), "codenames-backend-test-"),
-    );
-    await fs.writeFile(
-      path.join(tmpDir, "index.html"),
-      "<html><body>test-index</body></html>",
-      "utf8",
-    );
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "codenames-backend-test-"));
+    await fs.writeFile(path.join(tmpDir, "index.html"), "<html><body>test-index</body></html>", "utf8");
   });
 
   afterEach(async () => {
@@ -32,10 +26,7 @@ describe("backend API", () => {
       webDistDir: tmpDir,
     });
 
-    const response = await request(app)
-      .get("/extra")
-      .query({ phrase: "correct-phrase" })
-      .expect(200);
+    const response = await request(app).get("/extra").query({ phrase: "correct-phrase" }).expect(200);
 
     expect(response.body).toEqual(["cipher", "signal"]);
   });
