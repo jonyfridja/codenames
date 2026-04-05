@@ -14,11 +14,17 @@
     "act:job": "act -W .github/workflows/ci.yml -j",
     "act:deploy": "act -W .github/workflows/ci.yml",
     "act:build": "act -W .github/workflows/ci.yml -j build",
-    "act:test": "act -W .github/workflows/ci.yml-j test"
+    "act:test": "act -W .github/workflows/ci.yml-j test",
+    "release": "semantic-release"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/exec": "^7.1.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^12.0.6",
     "husky": "^9.1.7",
     "prettier": "^3.5.3",
+    "semantic-release": "^25.0.3",
     "turbo": "^2.9.3",
     "typescript": "5.8.2"
   },
