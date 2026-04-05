@@ -1,6 +1,18 @@
 # [1.1.0](https://github.com/jonyfridja/codenames/compare/v1.0.1...v1.1.0) (2026-04-05)
 
 
+### Bug Fixes
+
+* **backend:** tests ([a9f43e4](https://github.com/jonyfridja/codenames/commit/a9f43e40e87fe31cfc925335c2c2e36bcef7e299))
+
+
+### Features
+
+* **backend:** returns words from google drive ([27139ed](https://github.com/jonyfridja/codenames/commit/27139ed7c666b941fb8c5c557ad550481ca3df9c))
+
+# [1.1.0](https://github.com/jonyfridja/codenames/compare/v1.0.1...v1.1.0) (2026-04-05)
+
+
 ### Features
 
 * **backend:** returns words from google drive ([27139ed](https://github.com/jonyfridja/codenames/commit/27139ed7c666b941fb8c5c557ad550481ca3df9c))
