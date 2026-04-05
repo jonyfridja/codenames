@@ -6,8 +6,6 @@ import { getExtraWords } from "./words.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const defaultExtraWords = ["cipher", "double", "dossier", "handler", "signal", "vault"];
-
 function defaultWebDistDir() {
   return path.resolve(__dirname, "../../../dist");
 }
@@ -15,7 +13,7 @@ function defaultWebDistDir() {
 export function createApp(options = {}) {
   const app = express();
   const expectedPhrase = options.expectedPhrase ?? process.env.EXTRA_AUTH_PHRASE ?? "open-sesame";
-  const extraWords = options.extraWords ?? defaultExtraWords;
+  const extraWords = options.extraWords;
   const webDistDir = options.webDistDir ?? defaultWebDistDir();
   const webIndexFile = path.join(webDistDir, "index.html");
 
@@ -33,7 +31,8 @@ export function createApp(options = {}) {
     const phrase = req.query.phrase;
     if (typeof phrase === "string" && phrase === expectedPhrase) {
       try {
-        const words = (await getExtraWords()) || extraWords;
+        const words = extraWords || (await getExtraWords());
+
         res.status(200).json(words);
         return;
       } catch (err) {}

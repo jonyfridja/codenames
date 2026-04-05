@@ -13,16 +13,18 @@ export async function getExtraWords() {
   if (myCache.has(wordsKey)) {
     return myCache.get(wordsKey);
   }
-
-  const response = await fetch(WORD_URL);
-  if (response.ok) {
-    const text = await response.text();
-    const words = text
-      .split("\n")
-      .map((line) => line.trim())
-      .filter((line) => line.length > 0);
-    myCache.set(wordsKey, words);
-    return words;
+  try {
+    const response = await fetch(WORD_URL);
+    if (response.ok) {
+      const text = await response.text();
+      const words = text
+        .split("\n")
+        .map((line) => line.trim())
+        .filter((line) => line.length > 0);
+      myCache.set(wordsKey, words);
+      return words;
+    }
+  } catch (err) {
+    return [];
   }
-  return [];
 }

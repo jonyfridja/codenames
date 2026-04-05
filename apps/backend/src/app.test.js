@@ -2,7 +2,8 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import request from "supertest";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { myCache } from "./words.js";
 import { createApp } from "./app.js";
 
 describe("backend API", () => {
@@ -11,9 +12,12 @@ describe("backend API", () => {
   beforeEach(async () => {
     tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "codenames-backend-test-"));
     await fs.writeFile(path.join(tmpDir, "index.html"), "<html><body>test-index</body></html>", "utf8");
+    myCache.flushAll();
+    vi.stubGlobal("fetch", async () => ({ ok: false }));
   });
 
   afterEach(async () => {
+    vi.unstubAllGlobals();
     if (tmpDir) {
       await fs.rm(tmpDir, { recursive: true, force: true });
     }

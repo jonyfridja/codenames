@@ -6,4 +6,5 @@ beforeEach(() => myCache.flushAll());
 it("returns words from fetch", async () => {
   vi.stubGlobal("fetch", async () => ({ ok: true, text: async () => "foo\nbar" }));
   expect(await getExtraWords()).toEqual(["foo", "bar"]);
+  vi.unstubAllGlobals();
 });
