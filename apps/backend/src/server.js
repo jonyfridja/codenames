@@ -1,7 +1,7 @@
 import { createApp } from "./app.js";
 
 const app = createApp();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 10000;
 console.debug(`PORT env var: ${process.env.PORT}`);
 console.debug(`port: ${port}`);
 
