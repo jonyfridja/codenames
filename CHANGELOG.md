@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/jonyfridja/codenames/compare/v1.0.0...v1.0.1) (2026-04-05)
+
+
+### Bug Fixes
+
+* **backend:** port default is 10k ([ed6ba02](https://github.com/jonyfridja/codenames/commit/ed6ba0216ac363bf8049b8d5007d68b435d74183))
+
 # 1.0.0 (2026-04-05)
 
 
