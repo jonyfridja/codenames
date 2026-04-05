@@ -1,6 +1,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import express from "express";
+import { getExtraWords } from "./words.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,11 +29,14 @@ export function createApp(options = {}) {
 
   app.use(express.static(webDistDir, { index: false }));
 
-  app.get("/extra", (req, res) => {
+  app.get("/extra", async (req, res) => {
     const phrase = req.query.phrase;
     if (typeof phrase === "string" && phrase === expectedPhrase) {
-      res.status(200).json(extraWords);
-      return;
+      try {
+        const words = (await getExtraWords()) || extraWords;
+        res.status(200).json(words);
+        return;
+      } catch (err) {}
     }
 
     res.sendStatus(403);
